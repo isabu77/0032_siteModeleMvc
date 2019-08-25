@@ -1,0 +1,11 @@
+.env
+.vscode
+www/vendor
+www/composer.lock
+www/public/adminer.php
+www/tests/ExoTest/
+www/public/temp
+www/src/config.php
+www/src/configWamp.php
+www/src/configUnix.php
+www/public/assets/upload

@@ -1,0 +1,32 @@
+{% extends "layout/default.twig" %}
+{# page contact #}
+{% block content %}
+{{ parent() }}
+<section class="container p-3">
+    <form method="post" name="{{title}}" action="">  
+        <h2 class="text-center">{% block title %}{{title}}{% endblock %}</h2>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="from">Courriel pour la réponse</label>  
+                <input class="form-control" type="text" name="from" id="from"/>  
+        </div>  
+        </div>  
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="object">Objet</label>  
+                <input class="form-control" type="text" name="object" id="object"/>  
+            </div>   
+        </div>  
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="message">Message</label>  
+                <textarea class="form-control" name="message" id="message" rows="20" cols="80"></textarea>  
+            </div>  
+        </div>            
+        <p class="text-center m-0">
+            <button class="btn btn-warning" required type="reset">Effacer</button>
+            <button class="btn btn-success" required type="submit">Envoyer</button>
+        </p>
+    </form>  
+</section>
+{% endblock content %}

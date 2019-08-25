@@ -1,0 +1,149 @@
+#!/usr/bin/env php
+<?php
+// Ceation des tables en commande unix avec les variables d'environnement dans .env
+
+$basepath = dirname(__dir__) . DIRECTORY_SEPARATOR; // contient /var/www/
+
+
+if (php_sapi_name() != "cli") {
+  fwrite(
+    STDERR,
+    PHP_EOL . "Fichier uniquement pour ligne de commande" . PHP_EOL
+  );
+  die(1);
+}
+$demo = false;
+foreach ($argv as $value) {
+  if ($value === "--demo") {
+    $demo = true;
+  }
+  if ($value === "-h" || $value === "--help") {
+    echo PHP_EOL . "Pour insérer les données de demo utilisez le flag --demo" . PHP_EOL;
+    exit();
+  }
+}
+require_once $basepath . 'vendor/autoload.php';
+
+$dbname = getenv('MYSQL_DATABASE');
+$dbuser = getenv('MYSQL_USER');
+$dbpassword = getenv('MYSQL_PASSWORD');
+$dbcontainer = getenv('CONTAINER_MYSQL');
+$pdo = new PDO("mysql:host=$dbcontainer;dbname=$dbname", $dbuser, $dbpassword);
+
+$prefix = getenv('TABLE_PREFIX');
+
+/**
+ * suppression des tables
+ *  
+ */
+$pdo->exec('SET FOREIGN_KEY_CHECKS = 0');
+
+//éléments de base
+$etape = $pdo->exec("DROP TABLE {$prefix}config");
+
+//utilisateurs
+$etape = $pdo->exec("DROP TABLE {$prefix}user");
+$etape = $pdo->exec("DROP TABLE {$prefix}user_infos");
+$etape = $pdo->exec("DROP TABLE {$prefix}action");
+
+$pdo->exec('SET FOREIGN_KEY_CHECKS = 1');
+
+/**
+ * creation des tables
+ *  
+ */
+echo "[";
+
+// la table de configuration
+$etape = $pdo->exec("CREATE TABLE {$prefix}config (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `tva` float NOT NULL,
+  `port` float,
+  `ship_limit` float,
+  `growing_days` int default 20,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+          PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+echo "-|config|-" . $etape;
+
+// les utilisateurs connectés
+$etape = $pdo->exec("CREATE TABLE {$prefix}user (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `mail` varchar(255) NOT NULL,
+  `password` varchar(255) NOT NULL,
+  `token` varchar(24) NOT NULL,
+  `verify` tinyint(1) NOT NULL DEFAULT 0,
+  `created_at` timestamp NULL DEFAULT current_timestamp(),
+          PRIMARY KEY(id)
+) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+echo "-|user|-" . $etape;
+
+// les adresses user_infos
+$etape = $pdo->exec("CREATE TABLE {$prefix}user_infos (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `user_id` int(11),
+  `lastname` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `address` varchar(255) NOT NULL,
+  `zip_code` varchar(255) NOT NULL,
+  `city` varchar(255) NOT NULL,
+  `country` varchar(255) NOT NULL,
+  `phone` varchar(255) NOT NULL,
+          PRIMARY KEY(id),
+          CONSTRAINT fk_user
+                FOREIGN KEY(user_id)
+                REFERENCES {$prefix}user(id)
+                ON DELETE CASCADE
+                ON UPDATE RESTRICT
+) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+echo "-|user_infos|-" . $etape;
+
+// les travaux 
+$etape = $pdo->exec("CREATE TABLE {$prefix}action (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT not null,
+  `title` VARCHAR(255) not null,
+  `content` longtext NOT null,
+  `limited_at` datetime default CURRENT_TIMESTAMP,
+          PRIMARY KEY(id),
+          CONSTRAINT fk_action
+                FOREIGN KEY(user_id)
+                REFERENCES {$prefix}user(id)
+                ON DELETE CASCADE
+                ON UPDATE RESTRICT
+  ) ENGINE=InnoDB DEFAULT CHARSET=latin1");
+echo "-|action|-" . $etape;
+
+
+if ($demo == true) {
+
+  echo PHP_EOL . "Mode Demo actif !" . PHP_EOL;
+
+  echo "[||";
+
+  $faker = Faker\Factory::create('fr_FR');
+  echo "-- INSERT --";
+
+  // user admin
+  $password = password_hash('admin', PASSWORD_BCRYPT);
+  $token = substr(md5(uniqid()), 0, 24);
+  echo "-||-";
+  $pdo->exec("INSERT INTO {$prefix}user SET
+            mail='admin@admin.fr',
+            password ='{$password}',
+            token = 'ADMIN',
+            verify = 1
+            ");
+  echo "-|user|-";
+
+  $pdo->exec("INSERT INTO {$prefix}user_infos (`user_id`, `lastname`, `firstname`, `address`, `zip_code`, `city`, `country`, `phone`) VALUES
+    (1, 'Administrateur', 'Admin', '10 rue fleurie', '03000', 'Montluçon',  'France',  '03 03 03 03 03')");
+
+  // configuration            
+  $pdo->exec("INSERT INTO {$prefix}config (`tva` , `port`, `ship_limit`) VALUES
+    (1.2, 5.4, 30)
+    ");
+  echo "-|config|-";
+
+  echo PHP_EOL . "-||]" . PHP_EOL;
+}

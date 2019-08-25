@@ -1,0 +1,104 @@
+{% extends "layout/default.twig" %}
+{# page Inscription au site #}
+{% block content %}
+{{ parent() }}
+<section class="container p-3">
+    <form method="POST" name="{{title}}" action="" {% if errors %}class="was-validated" {% endif %}>
+        <h2 class="text-center">{% block title %}{{title}}{% endblock %}</h2>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="mail">Votre courriel</label>
+                <input id="mail" class="form-control" type="email" name="mail" value="{{user.mail}}" required>
+                {% if errors.mail %}
+                <div class="invalid-feedback">
+                    <ul>
+                        {% for error in errors.mail %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="mailVerify">Vérification de votre courriel</label>
+                <input id="mailVerify" class="form-control" type="email" name="mailVerify" value="{{user.mailVerify}}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="password">Votre mot de passe</label>
+                <input id="password" class="form-control" type="password" name="password" value="" required>
+                {% if errors.password %}
+                <div class="invalid-feedback">
+                    <ul>
+                        {% for error in errors.password %}
+                        <li>{{ error }}</li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="form-group col-12 col-sm">
+                <label for="passwordVerify">Confirmez votre mot de passe</label>
+                <input id="passwordVerify" class="form-control" type="password" name="passwordVerify" value="" required>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="lastname">votre nom</label>
+                <input id="lastname" class="form-control" type="text" name="lastname" value="{{user.lastname}}" required>
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="firstname">votre prénom</label>
+                <input id="firstname" class="form-control" type="text" name="firstname" value="{{user.firstname}}" required>
+            </div>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="country">Votre pays</label>
+                <input id="country" class="form-control" type="text" name="country" value="{{user.country}}" required>
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="phone">Votre numéro de portable</label>
+                <input id="phone" class="form-control" type="tel" name="phone" value="{{user.phone}}" required>
+            </div>
+        </div>
+        
+		<h2 class="titreduhaut">Votre jardin</h2>
+		<div  class="form-group col-12 col-sm">
+			<label class="form-control-sm" for="name">NOM</label>
+			<input class="form-control form-control-sm" type="text" id="name" name="name" value="" required/>
+		</div>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="latitude">Latitude de votre jardin</label>
+                <input id="latitude" class="form-control" type="text" name="latitude" value="" required>
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="longitude">Longitude de votre jardin</label>
+                <input id="longitude" class="form-control" type="text" name="longitude" value="" required>
+            </div>
+        </div>
+        
+        <div class="form-group col-12 col-sm">
+            <label for="address">Adresse</label>
+            <input id="address" class="form-control" type="text" name="address" value="{{user.address}}" required>
+        </div>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="zipCode">Code postal</label>
+                <input id="zipCode" class="form-control" type="text" name="zipCode" value="{{user.zipCode}}" required>
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="city">Ville</label>
+                <input id="city" class="form-control" type="text" name="city" value="{{user.city}}" required>
+            </div>
+        </div>
+        <p class="text-center m-0">
+            <button class="btn btn-success" required type="submit">S'inscrire</button>
+        </p>
+    </form>
+</section>
+{% endblock content %}

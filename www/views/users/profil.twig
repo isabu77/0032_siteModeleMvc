@@ -1,0 +1,173 @@
+{% extends "layout/default.twig" %}
+{# page de profil utilisateur avec ses travaux #}
+{% block content %}
+{{ parent() }}
+<section class="container p-3">
+        <h2 class="text-center">{% block title %}{{title}}{% endblock %}</h2>
+
+	<form method="POST" name="{{title}}" action="">
+        <h2>Changer mon mot de passe </h2>
+     	<div class="row">
+          {% if message %}
+                <div class="alert alert-info"><p>{{ message }}</p></div>
+            {% endif %}
+			<div class="form-group col-12 col-sm">
+				<label for="passwordOld">Votre ancien mot de passe</label>
+				<input class="form-control " id="passwordOld" type="password" name="passwordOld" value="" required>
+			</div>
+		</div>
+     	<div class="row">
+			<div class="form-group col-12 col-sm">
+				<label for="password">Votre mot de passe</label>
+				<input  class="form-control" id="password" type="password" name="password" value="" required>
+			</div>
+			<div class="form-group col-12 col-sm">
+				<label for="passwordVerify">Confirmez votre mot de passe</label>
+				<input  class="form-control" id="passwordVerify" type="password" name="passwordVerify" value="" required>
+			</div>
+		</div>
+		<p class="text-center m-0">
+			<button class="btn btn-success" required type="submit">Modifier</button>
+		</p>
+	</form>
+
+	<form method="POST" name="{{title}}" action="">
+		<h2 class="titreduhaut">Mon adresse</h2>
+		{# PLUSIEURS ADRESSES
+		<div class="row">
+			<ul class="nav nav-pills nav-justified flex-column flex-sm-row">
+				{% for client in clients %}
+				{% if client.id == user.id %}
+					<li class="nav-item" onClick="selectAdresse({{client.id}})"><a id="a_{{client.id}}" class="nav-link active" >{{client.firstname}} {{client.lastname}}</a></li>
+				{% else %}
+					<li class="nav-item" onClick="selectAdresse({{client.id}})"><a id="a_{{client.id}}" class="nav-link" >{{client.firstname}} {{client.lastname}}</a></li>
+				{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+ #}
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="lastname">NOM</label>
+				<input class="form-control form-control-sm" type="text" id="lastname" name="lastname" value="{{user.lastname}}" required/>
+			</div>
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="firstname">PRENOM</label>
+				<input class="form-control form-control-sm" type="text" id="firstname" name="firstname" value="{{user.firstname}}" required/>
+			</div>
+		</div>
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="address">ADRESSE</label>
+				<input class="form-control form-control-sm" type="text" id="address" name="address" value="{{user.address}}" required/>
+			</div>
+		</div>
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="zipCode">Code Postal</label>
+				<input class="form-control form-control-sm" type="text" id="zipCode" name="zipCode" value="{{user.zipcode}}" required/>
+			</div>
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="city">VILLE</label>
+				<input class="form-control form-control-sm" type="text" id="city" name="city" value="{{user.city}}" required/>
+			</div>
+		</div>
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="country">PAYS</label>
+				<input class="form-control form-control-sm" type="text" id="country" name="country" value="{{user.country}}" required/>
+			</div>
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="phone">TEL</label>
+				<input class="form-control form-control-sm" type="tel" id="phone" name="phone" value="{{user.phone}}" required/>
+			</div>
+		</div>
+		<input id="id" type="hidden" name="user_infos_id" value="{{user.id}}" /></div>
+		<input id="user_id" type="hidden" name="user_id" value="{{user.user_id}}" /></div>
+		<p class="text-center m-0">
+			{# <button class="btn btn-success" required name="new" type="submit">Ajouter</button> #}
+			<button class="btn btn-success" required type="submit">Modifier</button>
+			{# <button  class="btn btn-danger" name="delete" formaction="" formmethod="POST" type="submit">Supprimer</button> #}
+		</p>
+	</form>
+
+	<form method="POST" name="{{title}}" action="">
+		<h2 class="titreduhaut">L'adresse de mon jardin</h2>
+		{# PLUSIEURS ADRESSES
+		<div class="row">
+			<ul class="nav nav-pills nav-justified flex-column flex-sm-row">
+				{% for client in clients %}
+				{% if client.id == user.id %}
+					<li class="nav-item" onClick="selectAdresse({{client.id}})"><a id="a_{{client.id}}" class="nav-link active" >{{client.firstname}} {{client.lastname}}</a></li>
+				{% else %}
+					<li class="nav-item" onClick="selectAdresse({{client.id}})"><a id="a_{{client.id}}" class="nav-link" >{{client.firstname}} {{client.lastname}}</a></li>
+				{% endif %}
+				{% endfor %}
+			</ul>
+		</div>
+ #}
+		<div  class="form-group col-12 col-sm">
+			<label class="form-control-sm" for="garden_name">NOM</label>
+			<input class="form-control form-control-sm" type="text" id="garden_name" name="garden_name" value="{{garden.name}}" required/>
+		</div>
+        <div class="row">
+            <div class="form-group col-12 col-sm">
+                <label for="garden_latitude">LATITUDE</label>
+                <input id="garden_latitude" class="form-control" type="text" name="garden_latitude" value="{{garden.latitude}}" required>
+            </div>
+            <div class="form-group col-12 col-sm">
+                <label for="garden_longitude">LONGITUDE</label>
+                <input id="garden_longitude" class="form-control" type="text" name="garden_longitude" value="{{garden.longitude}}" required>
+            </div>
+        </div>
+        
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="garden_address">ADRESSE</label>
+				<input class="form-control form-control-sm" type="text" id="garden_address" name="garden_address" value="{{garden.address}}" required/>
+			</div>
+		</div>
+		<div class="row">
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="garden_zipCode">Code Postal</label>
+				<input class="form-control form-control-sm" type="text" id="garden_zipCode" name="garden_zipCode" value="{{garden.zipcode}}" required/>
+			</div>
+			<div  class="form-group col-12 col-sm">
+				<label class="form-control-sm" for="garden_city">VILLE</label>
+				<input class="form-control form-control-sm" type="text" id="garden_city" name="garden_city" value="{{garden.city}}" required/>
+			</div>
+		</div>
+		<input id="garden_id" type="hidden" name="garden_id" value="{{garden.id}}" /></div>
+		<input id="garden_user_id" type="hidden" name="user_id" value="{{user.user_id}}" /></div>
+		<p class="text-center m-0">
+			{# <button class="btn btn-success" required name="new" type="submit">Ajouter</button> #}
+			<button class="btn btn-success" required type="submit">Modifier</button>
+			{# <button  class="btn btn-danger" name="delete" formaction="" formmethod="POST" type="submit">Supprimer</button> #}
+		</p>
+	</form>
+
+	<h2 class="titreduhaut">Mes travaux</h2>
+    <table class="table table-striped table-hover table-responsive-sm offset-md-1 col-md-10 col-12">
+        <thead>
+            <tr id="titres">
+                <th>Action</th>
+                <th>Date limite</th>
+                <th>Détail</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for action in actions %}
+            <tr id="traction_{{action.id}}">
+                <input type="hidden" name="id" value="{{action.id}}" />
+                <td>{{action.title}}</td>
+                <td>{{action.limitedAt}}</td>
+                <td>{{action.content}}</td>
+                <td><button class="fa fa-trash bg-secondary" value="supprimer" onclick="actionDelete({{action.id}});"/></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{{ paginate | raw }}
+</section>
+{% endblock content %}

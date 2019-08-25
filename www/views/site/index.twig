@@ -1,0 +1,57 @@
+{% extends "layout/default.twig" %}
+{# page d'accueil du site Garden Pad #}
+{% block content %}
+{{ parent() }}
+<section class="container p-3">
+    <article class="card p-3 col-12">
+        <div class="card-title">
+            {% if session.auth %}
+            <h2 class="text-center">Travaux prévus</h2>
+            {% else %}
+            <h2 class="text-center">Bienvenue !</h2>
+            {% endif %}
+        </div>
+        <div class="card-body">
+            {% if session.auth %}
+                <table class="table table-striped table-hover offset-md-1 col-md-10 col-12">
+                    <thead>
+                        <tr id="titres">
+                            <th>Action</th>
+                            <th>Détail</th>
+                            <th>Date prévue</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        {% for action in actions %}
+                        <tr id="traction_{{action.id}}">
+                            <input type="hidden" name="id" value="{{action.id}}" />
+                            <td>{{action.title}}</td>
+                            <td>{{action.content}}</td>
+                            <td>{{action.limitedAt}}</td>
+                            <td><button class="fa fa-trash bg-secondary" value="supprimer" onclick="actionDelete({{action.id}});"/></td>
+                        </tr>
+                        {% endfor %}
+                    </tbody>
+                </table>
+            {% else %}
+                <div class="text-center m-0">
+                    <h3>Site Modèle</h3>
+                    <div class="row d-md-flex flex-md-row justify-content-around p-0">
+                        <div>
+                            <a class="btn btn-success" href="{{ uri("userLogin") }}">Se connecter</a>
+                        </div>
+                        <div>
+                            <a class="btn btn-success" href="{{ uri("userSubscribe") }}">S'inscrire</a>
+                        </div>
+                    </div>
+                </div>
+
+            {% endif %}
+        </div>
+    </article>
+
+  
+</section>
+{{ paginate | raw }}
+{% endblock content %}

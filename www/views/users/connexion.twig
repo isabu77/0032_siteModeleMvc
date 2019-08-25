@@ -1,0 +1,40 @@
+{% extends "layout/default.twig" %}
+{# page de connexion avec google-sign-in #}
+{% block content %}
+{{ parent() }}
+<section id='login_section' class="d-flex flex-column align-items-center justify-content-center">
+    <article class="card p-3 col-12 col-sm-4">
+        <h2 class="text-center">{% block title %}{{title}}{% endblock %}</h2>
+        <div class="card-title">
+            <h1 class="text-center">{{ page }}</h1>
+        </div>
+        <div class="card-body p-0">
+            {% if auth != "" %}
+            <div class="text-center mb-5">
+                <a class="btn btn-success" href="{{ auth }}"><img src="/assets/img/google-24.png" alt="Google">Se connecter avec Google</a>
+            </div>
+            {% endif %}
+            <form method="POST" name="{{title}}" action="">
+                <div class="form-group col-12 col-sm">
+                    <label for="mail">Votre courriel</label>
+                    <input id="mail" class="form-control" type="email" name="mail" value="{{user.mail}}" required>
+                </div>
+                <div class="form-group col-12 col-sm">
+                    <label for="password">Votre mot de passe</label>
+                    <input id="password" class="form-control" type="password" name="password" value="" required>
+                </div>
+                <p class="text-center m-0">
+                    <button class="btn btn-success" type="submit">Connexion</button>
+                </p>
+                <div class="text-center m-1 column">
+                    <div>
+                        <a href="{{ uri("resetpwd") }}">Mot de passe oublié...</a>
+                    </div>
+                    <div>
+                        <a href="{{ uri("userSubscribe") }}">Pas encore inscrit ?</a>
+                    </div>
+            </form>
+        </div>
+    </article>
+</section>
+{% endblock content %}

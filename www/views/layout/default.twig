@@ -1,0 +1,157 @@
+{# page Default commune à toutes les pages #}
+<!DOCTYPE html>
+<html lang='fr'>
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width">
+	<title>Site MVC</title>
+	<link href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet"
+		integrity="sha384-wvfXpqpZZVQGK6TAh5PVlGOfQNHSoD2xbE+QkPxCAFlNEevoEH3Sl0sibVcOQVnN" crossorigin="anonymous">
+	<link href="https://stackpath.bootstrapcdn.com/bootswatch/4.3.1/lumen/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-iqcNtN3rj6Y1HX/R0a3zu3ngmbdwEa9qQGHdkXwSRoiE+Gj71p0UNDSm99LcXiXV" crossorigin="anonymous">
+	<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.min.css">
+	<link rel="stylesheet" type="text/css" href="/assets/styles/styles.css">
+	{# <link rel="shortcut icon" href="/assets/img/gardenpad.png"> #}
+	{% block css %}{% endblock %}
+	<script src="https://kit.fontawesome.com/c597f3655b.js"></script>
+</head>
+
+<body>
+	<header class="menu">
+		<nav class="navbar navbar-expand-lg navbar-dark bgBrown p-0">
+			{% if admin %}
+				<a class="navbar-brand" href="{{ uri("admin") }}"><i class="fa fa-home h1 ml-3"></i></a>
+			{% else %}
+				<a class="navbar-brand" href="{{ uri("home") }}"><i class="fa fa-home h1 ml-3"></i></a>
+			{% endif %}					
+			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarColor01"
+				aria-controls="navbarColor01" aria-expanded="false" aria-label="Toggle navigation">
+				<span class="navbar-toggler-icon"></span>
+			</button>
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav mr-auto">
+						<li class="nav-item">
+							<a class="nav-link" href="{{ uri("action") }}">Travaux</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ uri("contact") }}">Contact</a>
+						</li>
+						<li class="nav-item">
+							<a class="nav-link" href="{{ uri("about") }}">A propos...</a>
+						</li>
+						<li class="profil nav-item">
+							<a class="nav-link" href="{{ uri("mentions") }}">Mentions Légales</a>
+						</li>
+
+					{% if session.auth %}
+						<li class="profil nav-item"><a href="{{ uri("profil") }}" class="text-decoration-none nav-link">Profil</a></li>
+						<li class="profil nav-item"><a href="{{ uri("userLogout") }}" class="text-decoration-none nav-link">Déconnexion</a></li>
+					{% else %}
+						<li class="profil nav-item"><a href="{{ uri("userSubscribe") }}" class="text-decoration-none nav-link" >S'inscrire</a></li>
+						<li class="profil nav-item"><a href="{{ uri("userLogin") }}" class="text-decoration-none nav-link">Se connecter</a></li>
+					{% endif %}					
+				</ul>
+			</div>
+			{# menu dropdown utilisateur #}
+			<div class="dropdown profil-user">
+				<i class="fa fa-user h1 dropdown-toggle text-white mr-3" data-toggle="dropdown" ></i>
+				<ul class="dropdown-menu dropdown-menu-right navbar-light bg-light">
+					{% if session.auth %}
+						<li class="nav-item ">
+						<a href="{{ uri("profil") }}" class="text-decoration-none dropdown-item nav-link">Profil</a>
+						</li>
+						<li class="nav-item">
+						<a href="{{ uri("userLogout") }}" class="text-decoration-none dropdown-item nav-link">Déconnexion</a>
+						</li>
+					{% else %}
+						<li class="nav-item">
+						<a href="{{ uri("userLogin") }}" class="text-decoration-none dropdown-item nav-link">Se connecter</a>
+						</li>
+						<li class="nav-item">
+						<a href="{{ uri("userSubscribe") }}" class="text-decoration-none dropdown-item nav-link" >S'inscrire</a>
+						</li>
+					{% endif %}
+				</ul>
+			</div>
+		</nav>
+	</header>
+	<section class="body">
+		{% block content %}
+		<header class="align-items-center p-0">
+            {# <div class="col-6 p-0"><h1 class="text-center">{% block title %}{{title}}{% endblock %}</h1></div> #}
+			{# <div class="col-12 text-center p-0"><img id="logoGardenpad" src="/assets/img/gardenpad.png" alt="Garden Pad"></div> #}
+        </header>
+		{% endblock %}
+	</section>
+	<footer>
+		<nav class="navbar navbar-expand-lg navbar-dark bgBrown p-0">
+			<div class="collapse navbar-collapse" id="navbarColor01">
+				<ul class="navbar-nav m-auto">
+					<li class="nav-item active">
+						<a class="nav-link" href="{{ uri("mentions") }}">Mentions Légales</a>
+					</li>
+					<li class="nav-item">
+						<a class="nav-link" href="{{ uri("about") }}">à propos...</a>
+					</li>
+				</ul>
+			</div>
+		</nav>
+		<div class="m-0">
+		<span>
+			<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+				<img alt="Licence Creative Commons" style="border-width:0" src="https://i.creativecommons.org/l/by-nc-sa/4.0/88x31.png" />
+			</a>
+			<p class='m-0'>Cette œuvre est mise à disposition selon les termes de la </p>
+			<a rel="license" href="http://creativecommons.org/licenses/by-nc-sa/4.0/">
+				Licence Creative Commons Attribution - Pas d’Utilisation Commerciale - Partage dans les Mêmes Conditions 4.0 International
+			</a>
+			</span>
+		</div>
+	</footer>
+	<script src="https://code.jquery.com/jquery-3.4.1.min.js"
+		integrity="sha256-CSXorXvZcTkaix6Yvo6HppcZGetbYMGWSFlBw8HfCJo=" crossorigin="anonymous"></script>
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+		integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+		crossorigin="anonymous"></script>
+	<script src="https://js.stripe.com/v3/"></script>
+ 	{# <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script> #}
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/js/toastr.min.js"></script>
+	{% block script %}{% endblock %}
+	<script type="text/javascript" src="/assets/js/script.js"></script>
+    <script type="text/javascript">
+        $(function() {
+            toastr.options = {
+            "closeButton": false,
+            "debug": false,
+            "newestOnTop": false,
+            "progressBar": true,
+            "positionClass": "toast-top-right",
+            "preventDuplicates": false,
+            "onclick": null,
+            "showDuration": "300",
+            "hideDuration": "1000",
+            "timeOut": "5000",
+            "extendedTimeOut": "1000",
+            "showEasing": "swing",
+            "hideEasing": "linear",
+            "showMethod": "fadeIn",
+            "hideMethod": "fadeOut"
+            }
+        
+            {% for msg in flash('success') %}
+            toastr['success']("{{msg}}"); 
+            {% endfor %} 
+            {% for msg in flash('warning') %}
+            toastr['warning']("{{msg}}"); 
+            {% endfor %} 
+            {% for msg in flash('error') %}
+                toastr['error']("{{msg}}"); 
+            {% endfor %} 
+            {% for msg in flash('alert') %}
+                toastr['error']("{{msg}}"); 
+            {% endfor %} 
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,67 @@
+{% extends "layout/default.twig" %}
+{# page des travaux à effectuer dans le jardin #}
+{% block content %}
+{{ parent() }}
+<section class="container p-3">
+    <article class="card p-3 mb-5 col-12 offset-md-2 col-md-8">
+        <div class="card-title">
+            <h2 class="text-center">Saisir une action</h2>
+        </div>
+        <div class="card-body">
+            <form method="POST" action="">
+                <div class="row align-items-center">
+                    <div class="form-group col-12 col-md-6 mb-2">
+                        <label for="title">Titre :</label>
+                        <select id="title-select" class="form-control mb-2" name="action_id"  onclick="selectTitle(this);">
+                            {% for action in actionTitles %}
+                            <option value="{{action.id}}">{{action.title}}</option>
+                            {% endfor %}
+                        </select>   
+                        <input id="title" class="form-control" type="text" name="title" value="{{action.title}}" required>
+                    </div>
+                    <div class="form-group col-12 col-md-6 mb-2">
+                        <label for="limitedAt">Date prévue :</label>
+                        <input id="limitedAt" class="form-control" type="date" name="limited_at" value='{{"now"|date("Y-m-d")}}' required>
+                    </div>
+                </div>
+                <div class="row align-items-center">
+                    <div class="form-group col-12">
+                        <label for="content">Détail :</label>
+                        <select id="content-select" class="form-control mb-2" name="action_id"  onclick="selectContent(this);">
+                            {% for action in actionContents %}
+                            <option value="{{action.id}}">{{action.content}}</option>
+                            {% endfor %}
+                        </select>   
+                        <input id="content" class="form-control" type="textarea" name="content" value="{{action.content}}" required>
+                    </div>
+                </div>
+                <p class="text-center m-0">
+                    <button class="btn btn-success" required type="submit">Ajouter</button>
+                </p>
+            </form>
+        </div>
+    </article>
+    <table class="table table-striped table-hover table-responsive-sm offset-md-1 col-md-10 col-12">
+        <thead>
+            <tr id="titres">
+                <th>Action</th>
+                <th>Date prévue</th>
+                <th>Détail</th>
+                <th></th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for action in actions %}
+            <tr id="traction_{{action.id}}">
+                <input type="hidden" name="id" value="{{action.id}}" />
+                <td>{{action.title}}</td>
+                <td>{{action.limitedAt|date("d-m-Y")}}</td>
+                <td>{{action.content}}</td>
+                <td><button class="fa fa-trash bg-secondary" value="supprimer" onclick="actionDelete({{action.id}});"></button></td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+{{ paginate | raw }}
+</section>
+{% endblock content %}

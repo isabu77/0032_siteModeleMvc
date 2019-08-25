@@ -1,0 +1,110 @@
+/*HEADER */
+
+header nav div ul li {
+    font-size: 1.3vw;
+}
+
+header h1 {
+    font-size: 3vw;
+}
+
+.menu {
+    top: 0;
+    width: 100%;
+}
+
+#logoGardenpad {
+    width: 10vw;
+}
+
+
+/* section body */
+
+.body {
+    min-height: 80vh;
+}
+
+
+/* couleur du header et du footer */
+
+.bgBrown {
+    background-color: #582900;
+}
+
+
+/* titres en vert */
+
+h2,
+h3 {
+    color: #288F28;
+}
+
+
+/* pagination : page active en vert */
+
+.page-item.active .page-link {
+    background-color: #288F28;
+    border-color: #288F28;
+}
+
+
+/* la carte About DOIT avoir une hauteur sinon elle n'apparaît pas */
+
+#map {
+    height: 600px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.img_list {
+    height: 2em;
+}
+
+
+/*LOGIN*/
+
+#login_section {
+    height: 80vh;
+}
+
+
+/* affichage du dropdown Utilisateur en accord avec le menu Bootstrap */
+
+.profil {
+    display: none;
+}
+
+.profil-user {
+    display: block;
+}
+
+
+/* MEDIA QUERIES pour cacher le dropdown Utilisateur en accord avec le menu Bootstrap */
+
+@media (max-width: 991.98px) {
+    .profil {
+        display: inline-block;
+    }
+    .profil-user {
+        display: none;
+    }
+}
+
+
+/* MEDIA QUERIES pour Mobile */
+
+@media (max-width: 767.98px) {
+    header nav div ul li {
+        font-size: 1rem;
+    }
+    header h1 {
+        font-size: 10vw;
+    }
+    header img {
+        size: 30%;
+    }
+    #logoGardenpad {
+        width: 20vw;
+    }
+}

@@ -1,0 +1,114 @@
+@import url("https://fonts.googleapis.com/css?family=Open+Sans&display=swap");
+#meteo {
+    background: linear-gradient(rgba(216, 237, 100, 0.6), rgba(107, 212, 142, 0.6));
+    margin: 0 auto;
+    border: 3px solid black;
+    box-shadow: 3px 3px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 12px;
+    display: flex;
+    width: 60%;
+    flex-direction: column;
+}
+
+#meteo hr {
+    background-color: black;
+    border: none;
+    box-shadow: 8px 2px 1px solid white;
+    border-radius: 12px;
+    height: 4px;
+    width: 100%;
+}
+
+#meteo .temp {
+    margin: 0 auto;
+    margin-top: 4px;
+    display: flex;
+}
+
+#meteo .temp p {
+    text-shadow: 2px 1px 1px white;
+    font-size: 160%;
+    font-family: 'Open Sans';
+    font-weight: bold;
+    margin: 20px;
+    display: flex;
+    align-items: center;
+}
+
+#meteo .temp p img {
+    width: 15%;
+}
+
+#meteo .temp .sol {
+    margin: 10px;
+    display: flex;
+    align-self: center;
+    width: 15%;
+    height: 15%;
+    animation: spin 40s linear infinite;
+}
+
+@keyframes spin {
+    100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+    }
+}
+
+#meteo h3 {
+    margin: 0 auto;
+    display: flex;
+    justify-content: center;
+    text-shadow: 2px 1px 1px white;
+    font-family: 'Open Sans';
+    font-size: 140%;
+    text-align: center;
+    font-weight: bold;
+}
+
+#meteo h3 img {
+    display: flex;
+    align-self: center;
+    width: 10%;
+    height: 10%;
+}
+
+#meteo .vent-minmax-img {
+    display: flex;
+    justify-content: space-around;
+}
+
+#meteo .vent-minmax-img .dir {
+    width: 10%;
+    height: 10%;
+}
+
+#meteo .vent-minmax-img .img-minmax {
+    width: 10%;
+    height: 10%;
+}
+
+#meteo .vent-minmax-img .img-humidite {
+    width: 10%;
+    height: 10%;
+}
+
+#meteo .vent {
+    display: flex;
+    justify-content: space-around;
+}
+
+#meteo .vent .wind-speed {
+    text-shadow: 2px 1px 1px white;
+    display: flex;
+}
+
+#meteo .vent .min-max {
+    text-shadow: 2px 1px 1px white;
+    display: flex;
+}
+
+#meteo .vent .humidity {
+    text-shadow: 2px 1px 1px white;
+    display: flex;
+}
